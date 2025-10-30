@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+source ./id
+
+
+WD="./assignment-0-shraga"
+AD="$WD/archive"
+
+if [ ! -d "$AD" ]; then
+    mkdir -p "$AD"
+fi
+
+
+cp "$WD/ex1/main.c" "$AD/ex1.c"
+cp "$WD/ex2/main.c" "$AD/ex2.c"
+
+rm hw0_$ID.zip
+zip -j hw0_$ID.zip $AD/*
