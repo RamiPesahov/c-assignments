@@ -7,7 +7,7 @@
 #endif
 
 int main(){
-    printf("   /\\"NL
+    printf( "   /\\"NL
             "  /  \\"NL
             " /    \\"NL
             "/      \\"NL

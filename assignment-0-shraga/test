@@ -2,14 +2,14 @@
 
 WD="./assignment-0-shraga"
 TD="$WD/run"
-
+FLAGS="-Wall -Wextra"
 if [ ! -d "$TD" ]; then
     mkdir -p "$TD"
 fi
 
 # Compile
-gcc "$WD/ex1/main.c" -o $TD/ex1.bin
-gcc "$WD/ex2/main.c" -o $TD/ex2.bin
+gcc $FLAGS "$WD/ex1/main.c" -o $TD/ex1.bin
+gcc $FLAGS "$WD/ex2/main.c" -o $TD/ex2.bin
 
 # Run
 
