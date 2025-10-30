@@ -1,0 +1,32 @@
+#!/usr/bin/bash
+
+WD="./assignment-0-shraga"
+TD="$WD/run"
+
+if [ ! -d "$TD" ]; then
+    mkdir -p "$TD"
+fi
+
+# Compile
+gcc "$WD/ex1/main.c" -o $TD/ex1.bin
+gcc "$WD/ex2/main.c" -o $TD/ex2.bin
+
+# Run
+
+$TD/ex1.bin > "$TD/ex1.out"
+
+$TD/ex2.bin > "$TD/ex2.out"
+
+# Test
+
+if diff -q "$WD/ex1/output.txt" "$TD/ex1.out" >/dev/null; then
+    echo "EX1 PASSED"
+else
+    echo "EX1 FAILED"
+fi
+
+if diff -q "$WD/ex2/output.txt" "$TD/ex2.out" >/dev/null; then
+    echo "EX2 PASSED"
+else
+    echo "EX2 FAILED"
+fi
