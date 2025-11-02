@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+
+WD="./assignment-1"
+TD="$WD/run"
+FLAGS="-Wall -Wextra"
+if [ ! -d "$TD" ]; then
+    mkdir -p "$TD"
+fi
+
+# Compile
+gcc $FLAGS "$WD/ex1.c" -o $TD/ex1.bin
+gcc $FLAGS "$WD/ex2.c" -o $TD/ex2.bin
+
+# Run
+
+
+echo "Running ex1..."
+$TD/ex1.bin 
+echo "Running ex2..."
+$TD/ex2.bin 

@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+source ./id
+
+
+WD="./assignment-1"
+AD="$WD/archive"
+
+if [ ! -d "$AD" ]; then
+    mkdir -p "$AD"
+fi
+
+
+cp "$WD/ex1.c" "$AD/ex1.c"
+cp "$WD/ex2.c" "$AD/ex2.c"
+
+rm hw1_$ID.zip
+zip -j hw1_$ID.zip $AD/*
