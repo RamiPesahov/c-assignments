@@ -26,7 +26,7 @@ int main() {
     else 
     sign = '-';
 
-    printf("Its sign is: %c",sign);
+    printf("Its sign is: %c\n",sign);
 
     temp = number;
 
@@ -41,6 +41,8 @@ int main() {
     if(temp == 0) 
         num_digits = 1;
     
+    temp = abs_value;
+        
     while(temp != 0) {
 
         num_digits++;
@@ -48,7 +50,7 @@ int main() {
         temp /= 10;
     }
 
-    printf("The number of digits is: $d\n",num_digits);
+    printf("The number of digits is: %d\n",num_digits);
     printf("The sum of digits is: %d\n",sum_digits);
 
     switch(base) {
