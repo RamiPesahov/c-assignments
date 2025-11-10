@@ -2,7 +2,7 @@
 
 int main() {
 
-    int number, base, num_digits, sum_digits = 0, temp, abs_value;
+    int number, base, num_digits = 0, sum_digits = 0, temp, abs_value;
     char sign;
 
     printf("Please enter a number (integer) and a base:\n");
@@ -18,23 +18,23 @@ int main() {
     printf("Here is some information about the given numbers: %d\n",number);
 
     if(number > 0)
-    sign = '+';
+        sign = '+';
     
     else if (number == 0)
-    sign = '0';
+        sign = '0';
 
     else 
-    sign = '-';
+        sign = '-';
 
     printf("Its sign is: %c\n",sign);
 
     temp = number;
 
     if(sign == '-')
-    abs_value = -temp;
+        abs_value = -temp;
 
     else 
-    abs_value = temp;
+        abs_value = temp;
 
     printf("Decimal representation of the absolute value: %d\n",abs_value);
 
