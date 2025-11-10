@@ -60,7 +60,7 @@ int main() {
         break;
 
     case 16:
-        printf("0d%d = %#x\n",abs_value,abs_value);
+        printf("0d%d = %x\n",abs_value,abs_value);
         break;
 
     case 10:
