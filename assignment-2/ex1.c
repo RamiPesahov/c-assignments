@@ -11,7 +11,6 @@ unsigned int even_digits(unsigned int number) {
     return even_digits(number / 10) + is_even;
 }
 
-
 int main() {
     unsigned int num;
     unsigned int result;
