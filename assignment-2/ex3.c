@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #define MAX_TARGET (9*9*9)
-#define MIN_TARGET 0
+#define MIN_TARGET (-9*9)
 #define MAX_INPUT  999
 #define MIN_INPUT  000
 
@@ -29,8 +29,8 @@ int evaluate(int d1, int d2, int d3, char op1, char op2) {
 int main() {
     int num, target;
     printf("Enter a 3-digit integer:\n");
-    if (scanf("%u", &num) != 1) {
-        printf("Invalid input.\n");
+    if (scanf("%d", &num) != 1) {
+        printf("Invalid input. Must be a 3-digit number.\n");
         return 0;
     }
 
