@@ -13,8 +13,24 @@ gcc $FLAGS "$WD/ex2.c" -o $TD/ex2.bin
 
 # Run
 
+$TD/ex1.bin < "$WD/tests/ex1_example1_in.txt" > "$TD/ex1_test1.txt"
+$TD/ex1.bin < "$WD/tests/ex1_example2_in.txt" > "$TD/ex1_test2.txt"
+$TD/ex2.bin < "$WD/tests/ex2_example1_in.txt" > "$TD/ex2_test1.txt"
+$TD/ex2.bin < "$WD/tests/ex2_example2_in.txt" > "$TD/ex2_test2.txt"
 
-echo "Running ex1..."
-$TD/ex1.bin 
-echo "Running ex2..."
-$TD/ex2.bin 
+
+if diff -q --strip-trailing-cr "$WD/tests/ex1_example1_out.txt" "$TD/ex1_test1.txt" >/dev/null; then
+    echo "EX 1 TEST 1 PASSED"
+fi
+
+if diff -q --strip-trailing-cr "$WD/tests/ex1_example2_out.txt" "$TD/ex1_test2.txt" >/dev/null; then
+    echo "EX 1 TEST 2 PASSED"
+fi
+
+if diff -q --strip-trailing-cr "$WD/tests/ex2_example1_out.txt" "$TD/ex2_test1.txt" >/dev/null; then
+    echo "EX 2 TEST 1 PASSED"
+fi
+
+if diff -q --strip-trailing-cr "$WD/tests/ex2_example2_out.txt" "$TD/ex2_test2.txt" >/dev/null; then
+    echo "EX 2 TEST 2 PASSED"
+fi
