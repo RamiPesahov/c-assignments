@@ -29,7 +29,7 @@ $(RUN_DIR)/%: %.c | $(RUN_DIR)
 # All test cases defined based on the directory structure
 EX1_TEST_CASES = example1
 EX2_TEST_CASES = example1
-EX3_TEST_CASES = example1 example2 example3 example4
+EX3_TEST_CASES = example1 example2 example3 example4 example5
 
 # The main test target runs all specific test suites
 .PHONY: test test_ex1 test_ex2 test_ex3
