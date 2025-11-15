@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX_TARGET (9 * 9 * 9)
-#define MIN_TARGET 0
+#define MIN_TARGET (-9*9)
 #define MAX_INPUT 999
 #define MIN_INPUT 000
 #define MAX_LINE 1000
@@ -39,7 +39,7 @@ int main(void){
     printf("Enter a 3-digit integer:\n");
     
     if (scanf("%s", num_text) != 1){
-        printf("Invalid input.\n");
+        printf("Invalid input. Must be a 3-digit number.\n");
         return 0;
     }
     num = atoi(num_text);
