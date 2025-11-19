@@ -44,8 +44,7 @@ int main(void){
     }
     num = atoi(num_text);
 
-
-    if (num < MIN_INPUT || num > MAX_INPUT || strlen(num_text) < 3){
+    if (num < MIN_INPUT || num > MAX_INPUT){
         printf("Invalid input. Must be a 3-digit number.\n");
         return 0;
     }

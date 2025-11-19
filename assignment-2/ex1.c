@@ -1,10 +1,11 @@
 #include <stdio.h>
 
 unsigned int even_digits(unsigned int number) {
-
+    
+    unsigned int is_even = 0; // 1 if the digit is even and 0 otherwise
+    
     if(number == 0) return 0;
 
-    unsigned int is_even = 0; // 1 if the digit is even and 0 otherwise
 
     if(number % 2 == 0 && number % 10 != 0) is_even++;
 

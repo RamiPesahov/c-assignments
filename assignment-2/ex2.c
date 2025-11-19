@@ -2,9 +2,11 @@
 
 unsigned int sum_digits(unsigned int number) {
 
+      unsigned int current_sum;
+
     if(number < 10) return number;
 
-    unsigned int current_sum = sum_digits(number / 10) + (number % 10);
+    current_sum = sum_digits(number / 10) + (number % 10);
 
     current_sum = sum_digits(current_sum);
 
