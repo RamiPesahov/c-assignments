@@ -92,6 +92,6 @@ int main(void){
         }
     }
 
-    printf("Found %d ways to reach the target using '+', '-' and '*' operations.\n", count);
+    printf("Found %d ways to reach the target using +, - and * operations.\n", count);
     return 0;
 }
