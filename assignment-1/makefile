@@ -2,7 +2,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -g
 RUN_DIR = run
-TARGETS = ex1 ex2 ex3
+TARGETS = ex1 ex2 
 
 # Define all executables built in the run directory
 EXECUTABLES = $(TARGETS:%=$(RUN_DIR)/%)
@@ -27,14 +27,13 @@ $(RUN_DIR)/%: %.c | $(RUN_DIR)
 # --- Testing Targets ---
 
 # All test cases defined based on the directory structure
-EX1_TEST_CASES = example1
-EX2_TEST_CASES = example1
-EX3_TEST_CASES = example1 example2 example3 example4
+EX1_TEST_CASES = example1 example2
+EX2_TEST_CASES = example1 example2
 
 # The main test target runs all specific test suites
-.PHONY: test test_ex1 test_ex2 test_ex3
+.PHONY: test test_ex1 test_ex2 
 
-test: test_ex1 test_ex2 test_ex3
+test: test_ex1 test_ex2 
 	@echo ""
 	@echo "=========================================================="
 	@echo "--- All test suites completed! Check output above. ---"
@@ -68,8 +67,7 @@ test_ex1: $(RUN_DIR)/ex1
 test_ex2: $(RUN_DIR)/ex2
 	$(call TEST_RECIPE,2,$(EX2_TEST_CASES))
 
-test_ex3: $(RUN_DIR)/ex3
-	$(call TEST_RECIPE,3,$(EX3_TEST_CASES))
+
 
 
 # --- Utility Targets ---

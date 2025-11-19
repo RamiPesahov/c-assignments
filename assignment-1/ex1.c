@@ -56,11 +56,11 @@ int main() {
     switch(base) {
 
     case 8:
-        printf("0d%d = %o\n",abs_value,abs_value);
+        printf("0d%d = 0%o\n",abs_value,abs_value);
         break;
 
     case 16:
-        printf("0d%d = %x\n",abs_value,abs_value);
+        printf("0d%d = 0x%x\n",abs_value,abs_value);
         break;
 
     case 10:
