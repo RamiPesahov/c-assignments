@@ -38,7 +38,7 @@ int main(void){
     int num, target;
     printf("Enter a 3-digit integer:\n");
     
-    if (scanf("%s", num_text) != 1){
+    if (scanf("%999s", num_text) != 1){
         printf("Invalid input. Must be a 3-digit number.\n");
         return 0;
     }
