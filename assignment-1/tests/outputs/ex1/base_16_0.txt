@@ -1,0 +1,7 @@
+Please enter a number (integer) and a base:
+Here is some information about the given numbers: 0
+Its sign is: 0
+Decimal representation of the absolute value: 0
+The number of digits is: 1
+The sum of digits is: 0
+0d0 = 0x0

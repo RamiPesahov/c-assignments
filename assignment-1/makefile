@@ -7,6 +7,11 @@ TARGETS = ex1 ex2
 # Define all executables built in the run directory
 EXECUTABLES = $(TARGETS:%=$(RUN_DIR)/%)
 
+# --- Test Directories ---
+TEST_DIR = tests
+INPUT_DIR = $(TEST_DIR)/inputs
+OUTPUT_DIR = $(TEST_DIR)/outputs
+
 # --- Directory Setup and Compilation ---
 
 # The default target builds all executables
@@ -19,16 +24,17 @@ $(RUN_DIR):
 	@echo "Created output directory: $(RUN_DIR)"
 
 # Generic rule to compile a .c file into an executable in the $(RUN_DIR)
-# The '| $(RUN_DIR)' ensures the directory is created before compilation
 $(RUN_DIR)/%: %.c | $(RUN_DIR)
 	@echo "Compiling $< -> $@"
 	$(CC) $(CFLAGS) $< -o $@
 
 # --- Testing Targets ---
 
-# All test cases defined based on the directory structure
-EX1_TEST_CASES = example1 example2
-EX2_TEST_CASES = example1 example2
+# AUTOMATICALLY DISCOVER TEST CASES
+# 1. Find all .txt files in inputs/exN
+# 2. Strip the path to get just the filename (e.g., "base_10_000.txt")
+EX1_TEST_FILES = $(notdir $(wildcard $(INPUT_DIR)/ex1/*.txt))
+EX2_TEST_FILES = $(notdir $(wildcard $(INPUT_DIR)/ex2/*.txt))
 
 # The main test target runs all specific test suites
 .PHONY: test test_ex1 test_ex2 
@@ -40,35 +46,46 @@ test: test_ex1 test_ex2
 	@echo "=========================================================="
 
 # Macro containing only the recipe (shell commands) for testing
-# Usage: $(call TEST_RECIPE, executable_number, list_of_examples)
+# Usage: $(call TEST_RECIPE, executable_number, list_of_filenames)
 define TEST_RECIPE
 	@echo ""
 	@echo "--- Running Test Suite for ex$(1) ($(words $(2)) examples) ---"
-	@for example in $(2); do \
-	INPUT_FILE="tests/ex$(1)_$${example}_in.txt"; \
-	EXPECTED_FILE="tests/ex$(1)_$${example}_out.txt"; \
-	ACTUAL_FILE="$(RUN_DIR)/ex$(1)_$${example}_out.actual"; \
-	echo "-> Testing case: $$example (Input: $${INPUT_FILE})"; \
-	./$(RUN_DIR)/ex$(1) < $${INPUT_FILE} > $${ACTUAL_FILE}; \
-	if diff -w -B --strip-trailing-cr $${EXPECTED_FILE} $${ACTUAL_FILE} > /dev/null; then \
-		echo "   [PASS] $$example"; \
-		rm -f $${ACTUAL_FILE}; \
+	@if [ -z "$(2)" ]; then \
+		echo "   [WARNING] No test files found in $(INPUT_DIR)/ex$(1)/"; \
 	else \
-		echo "   [FAIL] $$example - Difference found. Output comparison:"; \
-		diff -u $${EXPECTED_FILE} $${ACTUAL_FILE}; \
-	fi; \
-	done
+		for test_file in $(2); do \
+			INPUT_FILE="$(INPUT_DIR)/ex$(1)/$$test_file"; \
+			EXPECTED_FILE="$(OUTPUT_DIR)/ex$(1)/$$test_file"; \
+			ACTUAL_FILE="$(RUN_DIR)/ex$(1)_$${test_file}.actual"; \
+			\
+			echo "-> Testing case: $$test_file"; \
+			\
+			if [ ! -f "$$EXPECTED_FILE" ]; then \
+				echo "   [ERROR] Missing expected output file: $$EXPECTED_FILE"; \
+				continue; \
+			fi; \
+			\
+			./$(RUN_DIR)/ex$(1) < "$$INPUT_FILE" > "$$ACTUAL_FILE"; \
+			\
+			if diff -w -B --strip-trailing-cr "$$EXPECTED_FILE" "$$ACTUAL_FILE" > /dev/null; then \
+				echo "   [PASS] $$test_file"; \
+				rm -f "$$ACTUAL_FILE"; \
+			else \
+				echo "   [FAIL] $$test_file - Difference found."; \
+				echo "          Input: $$INPUT_FILE"; \
+				echo "          Diff output (Expected < vs Actual >):"; \
+				diff -u --strip-trailing-cr "$$EXPECTED_FILE" "$$ACTUAL_FILE" | head -n 20; \
+			fi; \
+		done; \
+	fi
 endef
 
-# Explicitly define targets and use the macro for the recipe (fix for macro newline issue)
+# Explicitly define targets and use the macro
 test_ex1: $(RUN_DIR)/ex1
-	$(call TEST_RECIPE,1,$(EX1_TEST_CASES))
+	$(call TEST_RECIPE,1,$(EX1_TEST_FILES))
 
 test_ex2: $(RUN_DIR)/ex2
-	$(call TEST_RECIPE,2,$(EX2_TEST_CASES))
-
-
-
+	$(call TEST_RECIPE,2,$(EX2_TEST_FILES))
 
 # --- Utility Targets ---
 

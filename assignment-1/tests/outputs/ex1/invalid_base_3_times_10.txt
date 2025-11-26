@@ -1,0 +1,13 @@
+Please enter a number (integer) and a base:
+Invalid base 7
+Please enter a valid base [8,10,16]:
+Invalid base 11
+Please enter a valid base [8,10,16]:
+Invalid base -29
+Please enter a valid base [8,10,16]:
+Here is some information about the given numbers: 3
+Its sign is: +
+Decimal representation of the absolute value: 3
+The number of digits is: 1
+The sum of digits is: 3
+Base 10 representation was already computed above.

@@ -1,0 +1,7 @@
+Please enter a number (integer) and a base:
+Here is some information about the given numbers: 999181
+Its sign is: +
+Decimal representation of the absolute value: 999181
+The number of digits is: 6
+The sum of digits is: 37
+Base 10 representation was already computed above.

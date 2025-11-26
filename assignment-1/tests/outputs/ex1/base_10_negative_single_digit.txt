@@ -1,0 +1,7 @@
+Please enter a number (integer) and a base:
+Here is some information about the given numbers: 3
+Its sign is: +
+Decimal representation of the absolute value: 3
+The number of digits is: 1
+The sum of digits is: 3
+Base 10 representation was already computed above.

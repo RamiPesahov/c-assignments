@@ -1,0 +1,7 @@
+Please enter a number (integer) and a base:
+Here is some information about the given numbers: -159043
+Its sign is: -
+Decimal representation of the absolute value: 159043
+The number of digits is: 6
+The sum of digits is: 22
+0d159043 = 0466503

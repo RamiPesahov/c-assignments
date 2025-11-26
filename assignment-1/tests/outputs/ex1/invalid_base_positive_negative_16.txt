@@ -1,0 +1,11 @@
+Please enter a number (integer) and a base:
+Invalid base 32
+Please enter a valid base [8,10,16]:
+Invalid base -99901234
+Please enter a valid base [8,10,16]:
+Here is some information about the given numbers: 912
+Its sign is: +
+Decimal representation of the absolute value: 912
+The number of digits is: 3
+The sum of digits is: 12
+0d912 = 0x390

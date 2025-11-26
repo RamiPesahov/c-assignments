@@ -1,0 +1,7 @@
+Please enter a number (integer) and a base:
+Here is some information about the given numbers: 7240751
+Its sign is: +
+Decimal representation of the absolute value: 7240751
+The number of digits is: 7
+The sum of digits is: 26
+0d7240751 = 0x6e7c2f

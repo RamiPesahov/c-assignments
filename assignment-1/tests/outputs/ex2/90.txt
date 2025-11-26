@@ -1,0 +1,3 @@
+Please enter the exam score (0-100):
+Grade: A
+Excellent work!

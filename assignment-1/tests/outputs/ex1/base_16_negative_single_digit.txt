@@ -1,0 +1,7 @@
+Please enter a number (integer) and a base:
+Here is some information about the given numbers: -5
+Its sign is: -
+Decimal representation of the absolute value: 5
+The number of digits is: 1
+The sum of digits is: 5
+0d5 = 0x5
