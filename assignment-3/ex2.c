@@ -17,7 +17,7 @@ int main() {
     char search_string_copy[MAX_STRING_LENGTH];
     char string_pool_copy[MAX_NUMBER_OF_STRINGS_IN_POOL][MAX_STRING_LENGTH];
 
-    int result = 0;
+    int rotations = 0;
     
     printf("Enter the search string:\n");
     scanf("%10[^\n]",search_string);
@@ -39,15 +39,15 @@ int main() {
         string_lowercase(string_pool_copy[i],strlen(string_pool_copy[i]));
     }
     
-    result = num_of_rotations(search_string_copy, string_pool_copy,num_of_strings);
+    rotations = num_of_rotations(search_string_copy, string_pool_copy,num_of_strings);
     
-    printf("Number of rotations of \"%s\" in the strings pool is: %d\n",search_string,result);
+    printf("Number of rotations of \"%s\" in the strings pool is: %d\n",search_string,rotations);
 
     return 0;
 }
 
 
-int get_pool_of_strings(char string_pool[][MAX_STRING_LENGTH]) { // returns how much strings are in the pool
+int get_pool_of_strings(char string_pool[][MAX_STRING_LENGTH]) { // This function handles scanning the pool of strings and returns how much strings are in the pool 
 
      printf("Enter the strings pool:\n");
      int i;
