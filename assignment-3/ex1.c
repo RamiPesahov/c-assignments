@@ -216,7 +216,7 @@ int check_diagonal_line(char board[][MAX_BOARD_SIZE],int player_turn,int size_of
     {
         if(board[i][size_of_board - i - 1] != current_player_char) {
 
-            diagonal_same_character = 0;
+            reverse_diagonal_same_character = 0;
             break;
         }
     }
