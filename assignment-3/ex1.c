@@ -13,6 +13,7 @@ int check_horizontal_line(char board[][MAX_BOARD_SIZE + 1],int player_turn,int s
 int check_vertical_line(char board[][MAX_BOARD_SIZE + 1],int player_turn,int size_of_board);
 int check_diagonal_line(char board[][MAX_BOARD_SIZE + 1],int player_turn,int size_of_board);
 int check_if_tie(char board[][MAX_BOARD_SIZE + 1], int size_of_board);
+int has_both(char sequence[],int size_of_board);
 
 int main() {
 
@@ -230,16 +231,56 @@ int check_diagonal_line(char board[][MAX_BOARD_SIZE + 1],int player_turn,int siz
 
 int check_if_tie(char board[][MAX_BOARD_SIZE + 1], int size_of_board) { // 1 if there is a tie and 0 otherwise
 
-    int tie = 1; // we assume there is a tie until proven otherwise
-
-    for (int i = 0; i < size_of_board; i++)
+    int rows = 0, columns = 0, diagonals = 0;
+    
+    for (int i = 0; i < size_of_board; i++) // calculates how many rows has both X and O
     {
-        for (int j = 0; j < size_of_board; j++)
-        {
-            if(board[i][j] == '_')
-                tie = 0;
+        char temp[MAX_BOARD_SIZE];
+        for(int j = 0; j < size_of_board; j++) {
+            temp[j] = board[i][j];
         }
+        rows += has_both(temp, size_of_board);
+    }
+
+    for (int i = 0; i < size_of_board; i++) // calculates how many columns has both X and O
+    {
+        char temp[MAX_BOARD_SIZE];
+        for(int j = 0; j < size_of_board; j++) {
+            temp[j] = board[j][i];
+        }
+        columns += has_both(temp, size_of_board);
+    }
+
+    char temp[MAX_BOARD_SIZE];
+    for (int i = 0; i < size_of_board; i++) // calculates if the main diagonal has both X and O
+    {
+        temp[i] = board[i][i];
+    }
+    diagonals += has_both(temp, size_of_board);
+
+    for (int i = 0; i < size_of_board; i++) // calculates if the reverse diagonal has both X and O
+    {
+        temp[i] = board[i][size_of_board - i - 1];
+    }
+    diagonals += has_both(temp, size_of_board);
+
+    if(rows == size_of_board && columns == size_of_board && diagonals == 2)
+        return 1; 
+    return 0;
+}
+
+int has_both(char sequence[],int size_of_board) {
+
+    int has_x = 0;
+    int has_o = 0;
+
+    for(int i=0;i<size_of_board;i++)  {
+
+        if (sequence[i] == 'X') has_x++;
+        else if(sequence[i] == 'O') has_o++;
     }
     
-    return tie;
+    if(has_x > 0 && has_o > 0)
+        return 1;
+    return 0;    
 }
