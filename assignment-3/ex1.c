@@ -14,6 +14,7 @@ int check_vertical_line(char board[][MAX_BOARD_SIZE + 1],int player_turn,int siz
 int check_diagonal_line(char board[][MAX_BOARD_SIZE + 1],int player_turn,int size_of_board);
 int check_if_tie(char board[][MAX_BOARD_SIZE + 1], int size_of_board);
 int has_both(char sequence[],int size_of_board);
+void scan_indices(char board[][MAX_BOARD_SIZE + 1], int* board_row,  int* board_column, int size_of_board);
 
 int main() {
 
@@ -91,29 +92,15 @@ void make_move(char board[][MAX_BOARD_SIZE + 1],int player, int size) {
 
     int board_row = 0, board_column = 0;
     printf("Player %d, please insert your move:\n",player);
+    scan_indices(board,&board_row, &board_column,size);
 
-    scanf("%d,%d", &board_row, &board_column);
-    while (board_column < 1 ||  board_column > size || board_row < 1 || board_column > size) 
-    {
-        printf("Invalid indices (out of bounds), please choose your move again:\n");
-        scanf("%d,%d", &board_row, &board_column);
-    }
-
-    while(board[board_row - 1][board_column - 1] != '_') {
-
-        printf("Invalid indices (occupied cell), please choose your move again:\n");
-        scanf("%d,%d", &board_row, &board_column);
-    }
-
-    if(player == 1) {
+    if(player == PLAYER1) {
         board[board_row - 1][board_column - 1] = 'X';
     }
 
     else {
         board[board_row - 1][board_column - 1] = 'O';
     }
-    
-
 }
 
 int is_winner(char board[][MAX_BOARD_SIZE + 1] ,int current_player,int size_of_board) {
@@ -279,8 +266,22 @@ int has_both(char sequence[],int size_of_board) {
         if (sequence[i] == 'X') has_x++;
         else if(sequence[i] == 'O') has_o++;
     }
-    
+
     if(has_x > 0 && has_o > 0)
         return 1;
     return 0;    
+}
+void scan_indices(char board[][MAX_BOARD_SIZE + 1], int* board_row,  int* board_column, int size) {
+
+    scanf("%d,%d", board_row, board_column);
+    if (*board_column < 1 ||  *board_column > size || *board_row < 1 || *board_row > size) 
+    {
+        printf("Invalid indices (out of bounds), please choose your move again:\n");
+        scan_indices(board,board_row,board_column,size);
+    }
+    
+    else if(board[*board_row - 1][*board_column - 1] != '_') {
+        printf("Invalid indices (occupied cell), please choose your move again:\n");
+        scan_indices(board,board_row,board_column,size);
+    }
 }
