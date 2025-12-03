@@ -84,7 +84,7 @@ int num_of_rotations(char search[], char pool[][MAX_STRING_LENGTH], int num_of_s
 
 int is_rotation(char search[], char string_in_pool[]) {
 
-    int len = strlen(search);
+    size_t len = strlen(search);
     if(len != strlen(string_in_pool))
         return 0;
 

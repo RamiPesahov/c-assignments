@@ -6,12 +6,13 @@
 #define PLAYER2 2
 #define GAME_CONTINUES -1
 
-void print_board(char board[][MAX_BOARD_SIZE], int size);
-void make_move(char board[][MAX_BOARD_SIZE],int player, int size);
-int is_winner(char board[][MAX_BOARD_SIZE],int player_turn,int size_of_board);
-int check_horizontal_line(char board[][MAX_BOARD_SIZE],int player_turn,int size_of_board);
-int check_vertical_line(char board[][MAX_BOARD_SIZE],int player_turn,int size_of_board);
-int check_diagonal_line(char board[][MAX_BOARD_SIZE],int player_turn,int size_of_board);
+void print_board(char board[][MAX_BOARD_SIZE + 1], int size);
+void make_move(char board[][MAX_BOARD_SIZE + 1],int player, int size);
+int is_winner(char board[][MAX_BOARD_SIZE + 1],int player_turn,int size_of_board);
+int check_horizontal_line(char board[][MAX_BOARD_SIZE + 1],int player_turn,int size_of_board);
+int check_vertical_line(char board[][MAX_BOARD_SIZE + 1],int player_turn,int size_of_board);
+int check_diagonal_line(char board[][MAX_BOARD_SIZE + 1],int player_turn,int size_of_board);
+int check_if_tie(char board[][MAX_BOARD_SIZE + 1], int size_of_board);
 
 int main() {
 
@@ -26,7 +27,7 @@ int main() {
    
     for (int i = 0; i < size_of_board; i++)
     {
-        for (int j = 0; i < size_of_board; i++)
+        for (int j = 0; j < size_of_board; j++)
         {
             board[i][j] = '_';
         }
@@ -37,39 +38,40 @@ int main() {
     
     while(winner == GAME_CONTINUES) { // if there is no winner yet
 
-        make_move(board,player_turn,size_of_board);
-        winner = is_winner(board,player_turn,size_of_board);
+        make_move(board, player_turn, size_of_board);
+        print_board(board, size_of_board);
+        winner = is_winner(board, player_turn, size_of_board);
 
         switch (winner)
         {
             case PLAYER1:
-              printf("Player 1 is the winner!\n");
-              break;
+                printf("Player 1 is the winner!\n");
+                break;
         
             case PLAYER2:
-             printf("Player 2 is the winner!\n");
-             break;
+                printf("Player 2 is the winner!\n");
+                break;
 
             case TIE:
-             printf("There is a Tie!\n");
-             break;
+                printf("There is a Tie!\n");
+                break;
             
             default:
 
-              if(player_turn == PLAYER1)
-                player_turn = PLAYER2;
-            
-             else 
-                player_turn = PLAYER1; 
+                if(player_turn == PLAYER1) 
+                    player_turn = PLAYER2;
+                else 
+                    player_turn = PLAYER1; 
 
-             break;
+                
+                break;
         }    
     }
 
     return 0;
 }
 
-void print_board(char board[][MAX_BOARD_SIZE], int size_of_board) {
+void print_board(char board[][MAX_BOARD_SIZE + 1], int size_of_board) {
 
     for (int i = 0; i < size_of_board; i++)
     {
@@ -84,23 +86,22 @@ void print_board(char board[][MAX_BOARD_SIZE], int size_of_board) {
     }
 }
 
-void make_move(char board[][MAX_BOARD_SIZE],int player, int size) {
+void make_move(char board[][MAX_BOARD_SIZE + 1],int player, int size) {
 
-    int current_player = player;
     int board_row = 0, board_column = 0;
     printf("Player %d, please insert your move:\n",player);
 
-    scanf("%d,%d",board_row,board_column);
+    scanf("%d,%d", &board_row, &board_column);
     while (board_column < 1 ||  board_column > size || board_row < 1 || board_column > size) 
     {
         printf("Invalid indices (out of bounds), please choose your move again:\n");
-        scanf("%d,%d",board_row,board_column);
+        scanf("%d,%d", &board_row, &board_column);
     }
 
     while(board[board_row - 1][board_column - 1] != '_') {
 
         printf("Invalid indices (occupied cell), please choose your move again:\n");
-        scanf("%d,%d",board_row,board_column);
+        scanf("%d,%d", &board_row, &board_column);
     }
 
     if(player == 1) {
@@ -110,11 +111,11 @@ void make_move(char board[][MAX_BOARD_SIZE],int player, int size) {
     else {
         board[board_row - 1][board_column - 1] = 'O';
     }
-    print_board(board,size);
+    
 
 }
 
-int is_winner(char board[][MAX_BOARD_SIZE] ,int current_player,int size_of_board) {
+int is_winner(char board[][MAX_BOARD_SIZE + 1] ,int current_player,int size_of_board) {
 
     int who_is_the_winner = -1; // we initialize the value to 'game still continues
 
@@ -136,7 +137,7 @@ int is_winner(char board[][MAX_BOARD_SIZE] ,int current_player,int size_of_board
     return GAME_CONTINUES; // no one wins and there is no tie, so the game still continutes
 }
 
-int check_horizontal_line(char board[][MAX_BOARD_SIZE] ,int current_player,int size_of_board) {
+int check_horizontal_line(char board[][MAX_BOARD_SIZE + 1] ,int current_player,int size_of_board) {
 
     char current_player_char = '_';
 
@@ -163,7 +164,7 @@ int check_horizontal_line(char board[][MAX_BOARD_SIZE] ,int current_player,int s
     return GAME_CONTINUES; // no one won in a row.
 }
 
-int check_vertical_line(char board[][MAX_BOARD_SIZE] ,int current_player,int size_of_board) {
+int check_vertical_line(char board[][MAX_BOARD_SIZE + 1] ,int current_player,int size_of_board) {
     
     char current_player_char = '_';
 
@@ -190,7 +191,7 @@ int check_vertical_line(char board[][MAX_BOARD_SIZE] ,int current_player,int siz
     return GAME_CONTINUES; // no one won in a column.    
 }
 
-int check_diagonal_line(char board[][MAX_BOARD_SIZE],int player_turn,int size_of_board) {
+int check_diagonal_line(char board[][MAX_BOARD_SIZE + 1],int player_turn,int size_of_board) {
 
     char current_player_char = '_';
 
@@ -227,7 +228,7 @@ int check_diagonal_line(char board[][MAX_BOARD_SIZE],int player_turn,int size_of
     return GAME_CONTINUES;    
 }
 
-int check_if_tie(char board[][MAX_BOARD_SIZE],int size_of_board) { // 1 if there is a tie and 0 otherwise
+int check_if_tie(char board[][MAX_BOARD_SIZE + 1], int size_of_board) { // 1 if there is a tie and 0 otherwise
 
     int tie = 1; // we assume there is a tie until proven otherwise
 
