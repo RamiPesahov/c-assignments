@@ -273,15 +273,18 @@ int has_both(char sequence[],int size_of_board) {
 }
 void scan_indices(char board[][MAX_BOARD_SIZE + 1], int* board_row,  int* board_column, int size) {
 
-    scanf("%d,%d", board_row, board_column);
-    if (*board_column < 1 ||  *board_column > size || *board_row < 1 || *board_row > size) 
-    {
-        printf("Invalid indices (out of bounds), please choose your move again:\n");
-        scan_indices(board,board_row,board_column,size);
-    }
+    int valid = 0; // 1 if the indices are good to go
     
-    else if(board[*board_row - 1][*board_column - 1] != '_') {
-        printf("Invalid indices (occupied cell), please choose your move again:\n");
-        scan_indices(board,board_row,board_column,size);
+    while(valid == 0) {
+        scanf("%d ,%d", board_row, board_column);
+        
+        if (*board_column < 1 ||  *board_column > size || *board_row < 1 || *board_row > size) 
+            printf("Invalid indices (out of bounds), please choose your move again:\n");
+        
+        else if(board[*board_row - 1][*board_column - 1] != '_') 
+            printf("Invalid indices (occupied cell), please choose your move again:\n");
+
+        else 
+            valid = 1;
     }
 }
