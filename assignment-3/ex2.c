@@ -11,8 +11,8 @@ int num_of_rotations(char search[], char pool[][MAX_STRING_LENGTH], int num_of_s
 int is_rotation(char search[], char string_in_pool[]);
 
 int main() {
-    char search_string[MAX_STRING_LENGTH];
-    char string_pool[MAX_NUMBER_OF_STRINGS_IN_POOL][MAX_STRING_LENGTH];
+    char search_string[MAX_STRING_LENGTH] = {0};
+    char string_pool[MAX_NUMBER_OF_STRINGS_IN_POOL][MAX_STRING_LENGTH] = {0};
     
     char search_string_copy[MAX_STRING_LENGTH];
     char string_pool_copy[MAX_NUMBER_OF_STRINGS_IN_POOL][MAX_STRING_LENGTH];
@@ -56,10 +56,9 @@ int get_pool_of_strings(char string_pool[][MAX_STRING_LENGTH]) { // This functio
         if(scanf("%10[^\n]",string_pool[i]) == EOF) {
             break;
         }
-
         getchar(); // flush the \n    
      }
-     getchar(); // flush the \n
+     
      return i;
 }
 
@@ -84,8 +83,9 @@ int num_of_rotations(char search[], char pool[][MAX_STRING_LENGTH], int num_of_s
 
 int is_rotation(char search[], char string_in_pool[]) {
 
-    size_t len = strlen(search);
-    if(len != strlen(string_in_pool))
+    int len = strlen(search);
+    int string_in_pool_len = strlen(string_in_pool);
+    if(len != string_in_pool_len)
         return 0;
 
     if(len == 0)
