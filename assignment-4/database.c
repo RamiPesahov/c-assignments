@@ -11,7 +11,7 @@ void create_database(Database *db, int initial_capacity) {
         exit(1);
     }
 
-    db -> songs = (Song *) malloc(initial_capacity * sizeof(Song *));
+    db -> songs = (Song **) malloc(initial_capacity * sizeof(Song *));
    
     if((db -> songs) == NULL) {
 
@@ -19,17 +19,38 @@ void create_database(Database *db, int initial_capacity) {
         exit(1);
     }
     
-    db -> capacity = 0;
+    db -> capacity = initial_capacity;
     db -> count = 0;
 }
 
 
 void db_add_song(Database *db, Song *s) {
 
-    printf("ERROR: NULL Database pointer.\n");
+    if(db == NULL) {
 
-    printf("ERROR: NULL Song pointer.\n");
+        printf("ERROR: NULL Database pointer.\n");
+        exit(1);
+    }
 
+    if (s == NULL) {
+
+        printf("ERROR: NULL Song pointer.\n");
+        exit(1);
+    }
+
+    if((db -> count) < (db -> capacity)) {
+
+        *((db -> songs) + (db -> count))  = s; // going to the end of the array of songs and setting there new song
+        (db -> count)++;
+    }
+
+    else { // the database is full
+
+        (db -> capacity) *= 2;
+        (db -> songs) = (Song **) realloc((db -> songs) ,(db -> capacity) * sizeof(Song *));
+
+    }
+    
     printf("ERROR: Failed to expand database.\n");
 }
 
