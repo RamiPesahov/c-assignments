@@ -6,8 +6,13 @@
 
 void create_queue(Queue *q) {
 
-    printf("ERROR: NULL Queue pointer.\n");
+    if(q == NULL) {
 
+        printf("ERROR: NULL Queue pointer.\n");
+        exit(1);
+    }
+
+    
     printf("ERROR: Failed to allocate songs array.\n");
 }
 
