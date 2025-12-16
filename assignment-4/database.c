@@ -4,9 +4,23 @@
 #include "database.h"
 
 void create_database(Database *db, int initial_capacity) {
-    printf("ERROR: NULL Database pointer.\n");
+    
+    if(db == NULL) {
 
-    printf("ERROR: Failed to allocate songs array.\n");
+        printf("ERROR: NULL Database pointer.\n");
+        exit(1);
+    }
+
+    db -> songs = (Song *) malloc(initial_capacity * sizeof(Song *));
+   
+    if((db -> songs) == NULL) {
+
+        printf("ERROR: Failed to allocate songs array.\n");
+        exit(1);
+    }
+    
+    db -> capacity = 0;
+    db -> count = 0;
 }
 
 
