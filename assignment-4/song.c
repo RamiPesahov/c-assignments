@@ -81,4 +81,8 @@ void free_song(Song *s) {
     free(s -> title);
     free(s -> artist);
     free(s);
+
+    s -> title = NULL;
+    s -> artist = NULL;
+    s = NULL;
 }

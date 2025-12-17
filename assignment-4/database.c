@@ -115,7 +115,13 @@ void free_db(Database *db) {
         free((db -> songs)[i] -> title);
         free((db -> songs)[i] -> artist);
         free((db -> songs)[i]);
+
+        (db -> songs)[i] -> title = NULL;
+        (db -> songs)[i] -> artist = NULL;
+        (db -> songs)[i] = NULL;
     }
 
     free(db -> songs);
+
+    db -> songs = NULL;
 }
