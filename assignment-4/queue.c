@@ -76,8 +76,8 @@ void queue_add_song(Queue *q, Database *db, const char *title) {
     
     if((q -> queue_songs)[q -> rear] == NULL) { // whenever we allocate or reallocate in this case we need to check if it's went through succesfully
         
-        printf("ERROR: Failed to allocate memory for song title.\n");
-        return; // should we exit or return, we did return because that's how we handled the previous errors
+        // printf("ERROR: Failed to allocate memory for song title.\n");
+        exit(1);
     }
     
     strcpy((q -> queue_songs)[q -> rear], title);
@@ -137,17 +137,11 @@ void free_queue(Queue *q) {
         exit(1);
     }
 
-    if(q -> prev_song != NULL) {
-
         free(q -> prev_song);
         q -> prev_song = NULL;
-    }
-
-    if(q -> cur_song != NULL) {
-
+    
         free(q -> cur_song);
-        q -> cur_song = NULL;
-    } 
+        q -> cur_song = NULL; 
 
     if((q -> queue_songs) != NULL) {
        
@@ -155,8 +149,12 @@ void free_queue(Queue *q) {
 
             int position = ((q -> front) + i) % (q -> capacity);
 
+            if(q -> queue_songs[position] != NULL) {
+                
                 free((q -> queue_songs)[position]);
                 (q -> queue_songs)[position] = NULL;
+
+            }
         }
 
         free(q -> queue_songs);
@@ -164,5 +162,4 @@ void free_queue(Queue *q) {
     }
         
     free(q);
-    q = NULL;  
 }

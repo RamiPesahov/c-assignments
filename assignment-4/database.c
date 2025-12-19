@@ -55,7 +55,7 @@ void db_add_song(Database *db, Song *s) {
         db -> capacity = new_capacity;
     }
     
-    *((db -> songs) + (db -> count))  = s; // going to the end of the array of songs and setting there new song
+    (db -> songs)[db -> count] = s; // going to the end of the array of songs and setting there new song
     (db -> count)++;
 }
 
@@ -119,5 +119,4 @@ void free_db(Database *db) {
     db -> songs = NULL;
 
     free(db);
-    db = NULL;
 }
