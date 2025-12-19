@@ -66,8 +66,36 @@ void print_song(const Song *s) {
         printf("ERROR: Song has NULL fields.\n");
         exit(1);
     }
+    char *genre;
+
+    switch (s -> genre) {
+//    POP, ROCK, JAZZ, CLASSICAL, HIPHOP
+        case POP:
+            strcpy(genre,"POP");
+            break;
+
+        case ROCK:
+            strcpy(genre,"ROCK");
+            break;
+
+        case JAZZ:
+            strcpy(genre,"JAZZ");
+            break;
+
+        case CLASSICAL:
+            strcpy(genre,"CLASSICAL");
+            break;
+
+        case HIPHOP:
+            strcpy(genre,"HIPHOP");
+            break;
     
-    printf("Title: %s, Artist: %s, Duration: %ds, Genre: %s\n", s -> title, s -> artist, s -> duration_in_seconds, s -> genre);
+        default:
+            strcpy(genre,"UNKNOWN GENRE");
+            break;
+    }
+    
+    printf("Title: %s, Artist: %s, Duration: %ds, Genre: %s\n", s -> title, s -> artist, s -> duration_in_seconds, genre);
 }
 
 void free_song(Song *s) {
@@ -79,10 +107,11 @@ void free_song(Song *s) {
     }
 
     free(s -> title);
-    free(s -> artist);
-    free(s);
-
     s -> title = NULL;
+
+    free(s -> artist);
     s -> artist = NULL;
+    
+    free(s);
     s = NULL;
 }

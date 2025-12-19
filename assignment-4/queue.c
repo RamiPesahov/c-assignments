@@ -147,24 +147,29 @@ void free_queue(Queue *q) {
         exit(1);
     }
 
-    if(q -> prev_song != NULL)
+    if(q -> prev_song != NULL) {
+
         free(q -> prev_song);
+        q -> prev_song = NULL;
+    }
 
-    if(q -> cur_song != NULL)    
+    if(q -> cur_song != NULL) {
+
         free(q -> cur_song);
+        q -> cur_song = NULL;
+    } 
 
-    for (int i = 0; i < q -> size; i++) {
-        
-        if((q -> queue_songs) != NULL) {
+    if((q -> queue_songs) != NULL) {
+       
+        for (int i = 0; i < q -> size; i++) {
 
-            free((q -> queue_songs)[i]);
-            (q -> queue_songs)[i] = NULL;
+            int position = ((q -> front) + i) % (q -> capacity);
+
+                free((q -> queue_songs)[position]);
+                (q -> queue_songs)[position] = NULL;
         }
     }
-    
+        
     free(q);
-    
-    q -> prev_song = NULL;
-    q -> cur_song = NULL; // good practice after freeing to set to null
-    q = NULL;
+    q = NULL;  
 }
