@@ -111,7 +111,6 @@ void free_db(Database *db) {
     }
 
     for(int i = 0; i < (db -> count); i++) { // we have only count numbers of songs in the array in size capacity
-
        free_song((db -> songs)[i]);
     }
 
