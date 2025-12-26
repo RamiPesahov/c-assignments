@@ -2,10 +2,7 @@
 
 unsigned int largest_power_of_2(unsigned int n) {
   // TODO
-
-  if (n == 0) // We are handling the case n = 0 eventhough in the PDF we are told to assume it's bigger
-    return 0;
-    
+ 
   unsigned int largest_power_which_smaller = 1;
 
   while(largest_power_which_smaller <= (n >> 1)) {

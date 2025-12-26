@@ -1,8 +1,32 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+unsigned int reverse(unsigned int n) {
+
+  unsigned int reversed = 0;
+  
+  while(n != 0) {
+
+    reversed <<= 1;
+    reversed |= (n & 1); // copy only the LSB of n
+    n >>= 1; 
+  }
+
+  return reversed;
+}
+
 bool is_binary_palindrome(unsigned int n) {
   // TODO
+
+  if (n == 0) return true;
+
+  unsigned int reversed = reverse(n);
+
+  if(n == reversed)
+    return true;
+
+  else 
+    return false;  
 }
 
 int main() {
