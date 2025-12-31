@@ -1,5 +1,7 @@
 // TODO: add your includes here
 
+#include "parser.h"
+
 #define FIELDS_LEN(flags) (sizeof(flags) / sizeof(flags_t))
 
 #define FIELDS_MIN 0

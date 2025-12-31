@@ -25,8 +25,8 @@ static stats_t compute_stats(FILE *file) {
   
   int c;
   unsigned int num_of_bytes = 0;
-  unsigned int one_occurences = 0;
-  unsigned int zero_occurences = 0;
+  unsigned long int one_occurences = 0;
+  unsigned long int zero_occurences = 0;
 
   int byte_occurences[VALUE_OPTIONS_IN_BYTE] = {0};
   
@@ -67,9 +67,12 @@ static stats_t compute_stats(FILE *file) {
   stats.cnt_0 = zero_occurences;
   stats.byte_freq = max_freq_byte;
 
-  fseek(file,num_of_bytes / 2,SEEK_SET);
-  stats.byte_mdl = fgetc(file);
-
+  if(stats.cnt_bytes > 0) { // if the file is not empty
+    
+    fseek(file,num_of_bytes / 2,SEEK_SET);
+    stats.byte_mdl = fgetc(file);
+  }
+  
   return stats;
 }
 
@@ -84,9 +87,11 @@ int main(int argc, char *argv[]) {
 
   // TODO: compute stats from file
   FILE *file;
+  if((file = fopen(argv[1],"rb")) == NULL) {
 
-  if((file = fopen(argv[1],"rb")) == NULL)
-    return 1;
+    printf("Error opening file: %s\n",argv[1]);
+    return 0;
+  }
 
   stats = compute_stats(file);  
   // print the results
