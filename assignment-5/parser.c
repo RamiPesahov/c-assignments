@@ -1,6 +1,7 @@
 // TODO: add your includes here
 
 #include "parser.h"
+#include <stdio.h>
 
 #define FIELDS_LEN(flags) (sizeof(flags) / sizeof(flags_t))
 
@@ -47,7 +48,29 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
 
   // TODO: check parameters
 
+  if(p_hdr == NULL || argv == NULL) {
+    
+    return ERR_PARAMS;
+  }
+  
   // TODO: check number of arguments
+  
+  // 1 is the name of the file, 7 arguments and 7 for the values of each arguments 
+  if(argc != 15) {
+
+    printf("Error: number of given arguements %d is different than expected",argc);
+    return ERR_NUM_ARGS;
+  }
+  
+  for (int i = 0; i < argc; i++)
+  {
+    if(strcmp(argv[i],HELP_FLAG) == 0){
+
+      print_help();
+      return OK;
+    }
+  }
 
   // TODO: parse the arguments
+  
 }
