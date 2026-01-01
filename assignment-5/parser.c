@@ -2,6 +2,7 @@
 
 #include "parser.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #define FIELDS_LEN(flags) (sizeof(flags) / sizeof(flags_t))
 
@@ -55,6 +56,12 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
   
   // TODO: check number of arguments
   
+  if(argc == 1 || (argc == 2 && strcmp(argv[1],HELP_FLAG) == 0)) { // no arguments, only the name of file
+    
+    print_help();
+    return OK;
+  } 
+  
   // 1 is the name of the file, 7 arguments and 7 for the values of each arguments 
   if(argc != 15) {
 
@@ -62,15 +69,93 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
     return ERR_NUM_ARGS;
   }
   
-  for (int i = 0; i < argc; i++)
-  {
-    if(strcmp(argv[i],HELP_FLAG) == 0){
-
-      print_help();
-      return OK;
-    }
-  }
-
   // TODO: parse the arguments
+
+  unsigned int packet = 0;
+
+  for (int i = 1; i < argc; i += 2) { // argv[0] is the file name, i+= 2 beacuse one argument is the flag and the next one is their value
+
+    int flag = -1; // initlized to no flag yet
+    for (int j = 1; j < FIELDS_LEN(flags); j++) { // skip the first flag which is the help beacause we already handled this case
+      
+      if(strcmp(argv[i],flags[j].short_name) == 0) {
+
+        flag = j;
+        break;
+      }
+    }
+
+    if (flag == -1) {
+      printf("Error: Unknown flag: \"%s\"",argv[i]);
+      return ERR_UNKNOWN_FLAG;
+    }
+    
+    if(i + 1 >= argc || argv[i + 1][0] == '-') {
+
+      printf("Error: Missing argument for flag \"%s\"",argv[i + 1]);
+      return ERR_MISSING_ARG;
+    }
+    
+    int value_of_flag = atoi(argv[i+1]);
+
+    if(value_of_flag < (int)flags[flag].min || value_of_flag > (int)flags[flag].max) {
+
+      printf("Error: value %d for flag \"%s\" (%s) is out of range [%u-%u]",value_of_flag,flags[flag].short_name,flags[flag].long_name,flags[flag].min,flags[flag].max);
+      return ERR_INVALID_VALUE;
+    }
+
+    switch(flag) {
+
+      case 1:
+        p_hdr -> version = (unsigned char)value_of_flag;
+        packet |= (unsigned int)(value_of_flag & 0x7) << 29;
+        break;
+
+      case 2:
+        p_hdr -> length = (unsigned char)value_of_flag;
+        packet |= (unsigned int)(value_of_flag & 0xF) << 25;
+        break;
+      
+      case 3:
+        p_hdr -> type = (unsigned char)value_of_flag;
+        packet |= (unsigned int)(value_of_flag & 0x1F) << 20;
+        break;
+      
+      case 4:
+        p_hdr -> src_node = (unsigned char)value_of_flag;
+        packet |= (unsigned int)(value_of_flag & 0x7F) << 13;
+        break;
+      
+      case 5:
+        p_hdr -> dst_node = (unsigned char)value_of_flag;
+        packet |= (unsigned int)(value_of_flag & 0x7F) << 6;
+        break;
+        
+      case 6:
+        p_hdr -> priority = (unsigned char)value_of_flag;
+        packet |= (unsigned int)(value_of_flag & 0x3) << 4;
+        break;
+          
+      case 7:
+        p_hdr -> encrypted = (value_of_flag == 1);
+        packet |= (unsigned int)(value_of_flag & 0x1) << 3;
+        break;
+
+      default:
+        break;  
+    }
+    
+    
+  }
   
+  unsigned int checksum_code = 0;
+  unsigned int temp = packet;
+  while(temp != 0) {
+    checksum_code += (temp & 1);
+    temp >>= 1;
+  }
+  
+  packet |= (checksum_code & 0x07); // modulu 8
+  printf("The Encoded Packet Header is: %X",packet);
+  return OK;
 }
