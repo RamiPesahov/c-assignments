@@ -65,7 +65,7 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
   // 1 is the name of the file, 7 arguments and 7 for the values of each arguments 
   if(argc != 15) {
 
-    printf("Error: number of given arguements %d is different than expected",argc);
+    printf("Error: number of given arguements %d is different than expected\n",argc);
     return ERR_NUM_ARGS;
   }
   
@@ -86,13 +86,13 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
     }
 
     if (flag == -1) {
-      printf("Error: Unknown flag: \"%s\"",argv[i]);
+      printf("Error: Unknown flag: \"%s\"\n",argv[i]);
       return ERR_UNKNOWN_FLAG;
     }
     
     if(i + 1 >= argc || argv[i + 1][0] == '-') {
 
-      printf("Error: Missing argument for flag \"%s\"",argv[i + 1]);
+      printf("Error: Missing argument for flag \"%s\"\n",argv[i + 1]);
       return ERR_MISSING_ARG;
     }
     
@@ -100,7 +100,7 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
 
     if(value_of_flag < (int)flags[flag].min || value_of_flag > (int)flags[flag].max) {
 
-      printf("Error: value %d for flag \"%s\" (%s) is out of range [%u-%u]",value_of_flag,flags[flag].short_name,flags[flag].long_name,flags[flag].min,flags[flag].max);
+      printf("Error: value %d for flag \"%s\" (%s) is out of range [%u-%u]\n",value_of_flag,flags[flag].short_name,flags[flag].long_name,flags[flag].min,flags[flag].max);
       return ERR_INVALID_VALUE;
     }
 
@@ -156,6 +156,6 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
   }
   
   packet |= (checksum_code & 0x07); // modulu 8
-  printf("The Encoded Packet Header is: %X",packet);
+  printf("The Encoded Packet Header is: 0x%X\n",packet);
   return OK;
 }
