@@ -24,11 +24,11 @@ static stats_t compute_stats(FILE *file) {
   stats_t stats = {};
   
   int c;
-  unsigned int num_of_bytes = 0;
+  unsigned long int num_of_bytes = 0;
   unsigned long int one_occurences = 0;
   unsigned long int zero_occurences = 0;
 
-  int byte_occurences[VALUE_OPTIONS_IN_BYTE] = {0};
+  unsigned long int byte_occurences[VALUE_OPTIONS_IN_BYTE] = {0};
   
 
   // TODO: compute the statistics

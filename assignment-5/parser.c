@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FIELDS_LEN(flags) (sizeof(flags) / sizeof(flags_t))
+#define FIELDS_LEN(flags) ((int)(sizeof(flags) / sizeof(flags_t)))
 
 #define FIELDS_MIN 0
 #define VERSION_MAX 7
@@ -57,22 +57,20 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
   
   // TODO: check number of arguments
   
+  // 1 is the name of the file, 7 arguments and 7 for the values of each arguments 
+  if(argc != 15 && !(argc == 1 || (argc == 2 && strcmp(argv[1],HELP_FLAG) == 0))) {
+
+    printf("Error: number of given arguements %d is different than expected\n",argc);
+    return ERR_NUM_ARGS;
+  }
+  
   if(argc == 1 || (argc == 2 && strcmp(argv[1],HELP_FLAG) == 0)) { // no arguments, only the name of file or help flag
     
     print_help();
     return OK;
   } 
   
-  // 1 is the name of the file, 7 arguments and 7 for the values of each arguments 
-  if(argc != 15) {
-
-    printf("Error: number of given arguements %d is different than expected\n",argc);
-    return ERR_NUM_ARGS;
-  }
-  
   // TODO: parse the arguments
-
-  unsigned int packet = 0;
 
   for (int i = 1; i < argc; i += 2) { // argv[0] is the file name, i+= 2 beacuse one argument is the flag and the next one is their value
 
