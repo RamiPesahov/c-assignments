@@ -112,32 +112,26 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
 
       case 2:
         p_hdr -> length = (unsigned char)value_of_flag;
-        packet |= (unsigned int)(value_of_flag & 0xF) << 25;
         break;
       
       case 3:
         p_hdr -> type = (unsigned char)value_of_flag;
-        packet |= (unsigned int)(value_of_flag & 0x1F) << 20;
         break;
       
       case 4:
         p_hdr -> src_node = (unsigned char)value_of_flag;
-        packet |= (unsigned int)(value_of_flag & 0x7F) << 13;
         break;
       
       case 5:
         p_hdr -> dst_node = (unsigned char)value_of_flag;
-        packet |= (unsigned int)(value_of_flag & 0x7F) << 6;
         break;
         
       case 6:
         p_hdr -> priority = (unsigned char)value_of_flag;
-        packet |= (unsigned int)(value_of_flag & 0x3) << 4;
         break;
           
       case 7:
         p_hdr -> encrypted = (value_of_flag == 1);
-        packet |= (unsigned int)(value_of_flag & 0x1) << 3;
         break;
 
       default:
@@ -146,15 +140,5 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
     
     
   }
-  
-  unsigned int checksum_code = 0;
-  unsigned int temp = packet;
-  while(temp != 0) {
-    checksum_code += (temp & 1);
-    temp >>= 1;
-  }
-  
-  packet |= (checksum_code & 0x07); // modulu 8
-  printf("The Encoded Packet Header is: 0x%X\n",packet);
   return OK;
 }

@@ -6,10 +6,23 @@ static unsigned int encode_packet_header(header_t hdr) {
   // TODO
 
   unsigned int packet = 0;
-
   packet |= (unsigned int)(hdr.version & 0x7) << 29;
+  packet |= (unsigned int)(hdr.length & 0xF) << 25;
+  packet |= (unsigned int)(hdr.type & 0x1F) << 20;
+  packet |= (unsigned int)(hdr.src_node & 0x7F) << 13;
+  packet |= (unsigned int)(hdr.dst_node & 0x7F) << 6;
+  packet |= (unsigned int)(hdr.priority & 0x3) << 4;
+  packet |= (unsigned int)(hdr.encrypted & 0x1) << 3;
 
+  unsigned int checksum_code = 0;
+  unsigned int temp = packet;
 
+  while(temp != 0) {
+    checksum_code += (temp & 1);
+    temp >>= 1;
+  }
+  packet |= (checksum_code & 0x07); // modulu 8
+  
   return packet;
 }
 
