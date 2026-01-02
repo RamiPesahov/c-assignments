@@ -1,5 +1,7 @@
 // TODO: add includes here
 #include "parser.h"
+#include <stdio.h>
+#include <string.h>
 
 // encoding the packet fields according to the layout
 static unsigned int encode_packet_header(header_t hdr) {
@@ -39,10 +41,19 @@ int main(int argc, const char *argv[]) {
   err_t ret;
 
   // TODO: check if need to print help (no args or only help)
+  if(argc == 1 || (argc == 2 && strcmp(argv[1],HELP_FLAG) == 0)) { // no arguments, only the name of file or help flag
+    
+    print_help();
+    return OK;
+  } 
 
   // TODO: parse arguments
+  ret = parse_args(argc, argv, &hdr);
+  if(ret != OK) return ret;
 
   // TODO: encode the packet header
+  hdr_buf = encode_packet_header(hdr);
 
   // TODO: print the encoded header
+  print_header(hdr_buf);
 }

@@ -3,6 +3,7 @@
 #include "parser.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define FIELDS_LEN(flags) (sizeof(flags) / sizeof(flags_t))
 
@@ -56,7 +57,7 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
   
   // TODO: check number of arguments
   
-  if(argc == 1 || (argc == 2 && strcmp(argv[1],HELP_FLAG) == 0)) { // no arguments, only the name of file
+  if(argc == 1 || (argc == 2 && strcmp(argv[1],HELP_FLAG) == 0)) { // no arguments, only the name of file or help flag
     
     print_help();
     return OK;
@@ -137,8 +138,6 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
       default:
         break;  
     }
-    
-    
   }
   return OK;
 }
