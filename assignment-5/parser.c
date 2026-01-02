@@ -92,7 +92,7 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
     
     if(i + 1 >= argc || argv[i + 1][0] == '-') {
 
-      printf("Error: Missing argument for flag \"%s\"\n",argv[i + 1]);
+      printf("Error: Missing argument for flag \"%s\"\n",argv[i]);
       return ERR_MISSING_ARG;
     }
     
@@ -108,7 +108,6 @@ err_t parse_args(int argc, const char *argv[], header_t *p_hdr) {
 
       case 1:
         p_hdr -> version = (unsigned char)value_of_flag;
-        packet |= (unsigned int)(value_of_flag & 0x7) << 29;
         break;
 
       case 2:

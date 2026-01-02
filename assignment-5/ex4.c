@@ -4,6 +4,13 @@
 // encoding the packet fields according to the layout
 static unsigned int encode_packet_header(header_t hdr) {
   // TODO
+
+  unsigned int packet = 0;
+
+  packet |= (unsigned int)(hdr.version & 0x7) << 29;
+
+
+  return packet;
 }
 
 // print header
