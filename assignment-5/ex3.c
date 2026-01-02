@@ -51,7 +51,7 @@ static stats_t compute_stats(FILE *file) {
     }
   }
 
-  int max = 0;
+  unsigned long int max = 0;
   unsigned char max_freq_byte = 0;
   for (int i = 0; i < VALUE_OPTIONS_IN_BYTE; i++)
   {
