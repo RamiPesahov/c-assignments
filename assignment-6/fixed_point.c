@@ -6,11 +6,18 @@
 void print_fixed(int16_t raw, int16_t q) {
     // TODO: Print up to 6 decimal places (with truncation)
     
+    if (raw < 0) {
+        printf("-");
+        raw = -raw;
+    }
+    int16_t integer_part = (raw >> q);
     int16_t mask = (1 << q) - 1;
-    uint16_t fraction = raw & mask;
-    uint32_t decimal = ((uint32_t)(fraction * CONVERT_TO_DECIMAL)) >> q;
+    uint16_t fraction_raw = (raw & mask);
 
-    printf("%d.%06u",(raw >> q), decimal);
+    uint32_t decimal_part = ((uint64_t)fraction_raw * CONVERT_TO_DECIMAL) >> q;
+
+    printf("%d.%06u", integer_part, decimal_part);
+
 }
 
 int16_t add_fixed(int16_t a, int16_t b) {
