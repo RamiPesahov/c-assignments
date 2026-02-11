@@ -27,3 +27,34 @@ int countstr(char *arr[], char *s){
     }
     return count;
 }
+
+int subString(char *str, char *sub_str){
+
+    int index = 0, start_str = 0;
+    for (int i = 0; str[i] != '\0' ||  sub_str[index] != '\0'; i++) {
+        
+        if(str[i] == sub_str[index]) {
+
+            index++;
+            start_str++;
+        } 
+        else {
+
+            index = 0;
+            start_str - 0;
+        }
+    }
+    return (start_str == strlen(str));
+}
+
+
+int countstr(char *arr[], char *s) {
+
+    int res = 0;
+    while(*arr) {
+
+        res += subString(*arr, s);
+        arr++;
+    }
+    return res;
+}
